@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface Reader {
 
-    List<WeatherData> read(String fileName);
+    List<DataPoint> read(String fileName, int indexMax, int indexMin);
 }

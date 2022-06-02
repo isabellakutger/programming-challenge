@@ -19,34 +19,30 @@ public final class App {
         // Your preparation code …
         Reader csvReader = new CSVReader();
 
-        List<WeatherData> weatherDataPoints = csvReader.read("src/main/resources/de/exxcellent/challenge/weather.csv");
+        List<DataPoint> weatherDataPoints = csvReader.read("src/main/resources/de/exxcellent/challenge/weather.csv", 1, 2);
+        List<DataPoint> footballDataPoints = csvReader.read("src/main/resources/de/exxcellent/challenge/football.csv", 5, 6);
 
-        String dayWithSmallestTempSpread = calculateDayWithSmallestTempSpread(weatherDataPoints);     // Your day analysis function call …
+        String dayWithSmallestTempSpread = calculateDataPointWithSmallestTempSpread(weatherDataPoints);     // Your day analysis function call …
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
 
-        String teamWithSmallestGoalSpread = "A good team"; // Your goal analysis function call …
+        String teamWithSmallestGoalSpread = calculateDataPointWithSmallestTempSpread(footballDataPoints); // Your goal analysis function call …
         System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
     }
 
-    public static String calculateDayWithSmallestTempSpread(List<WeatherData> weatherDataPoints) {
-        String dayWithSmallestTempSpread = null;
-        int smallestTempSpread = 100;
+    public static String calculateDataPointWithSmallestTempSpread(List<DataPoint> dataPointList) {
+        String dataPointWithSmallestTempSpread = null;
+        int smallestSpread = 100;
 
-        for (WeatherData weatherData : weatherDataPoints) {
-            // calculate temperature spread of current weather entry
-            int tempSpread = weatherData.getMaximumTemperature() - weatherData.getMinimumTemperature();
+        for (DataPoint dataPoint : dataPointList) {
+            // calculate spread of current entry
+            int spread = Math.abs(dataPoint.getMaximum() - dataPoint.getMinimum());
 
-            if (tempSpread < smallestTempSpread) {
-                smallestTempSpread = tempSpread;
-                dayWithSmallestTempSpread = weatherData.getDay();
+            if (spread < smallestSpread) {
+                smallestSpread = spread;
+                dataPointWithSmallestTempSpread = dataPoint.getLabel();
             }
         }
 
-        return dayWithSmallestTempSpread;
-    }
-
-    public static String calculateTeamWithSmallestGoalSpread() {
-        // todo: implement Challenge Task 2
-        return "Still a todo";
+        return dataPointWithSmallestTempSpread;
     }
 }

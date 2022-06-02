@@ -9,34 +9,34 @@ import java.util.List;
 public class CSVReader implements Reader {
 
     @Override
-    public List<WeatherData> read(String fileName) {
-        List<WeatherData> weatherDataPoints = new ArrayList<>();
+    public List<DataPoint> read(String fileName, int indexMax, int indexMin) {
+        List<DataPoint> dataPointList = new ArrayList<>();
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))) {
             //skip first line
             bufferedReader.readLine();
 
             // read first line containing actual data of csv
-            String weatherEntry = bufferedReader.readLine();
+            String csvEntry = bufferedReader.readLine();
 
             // go through each entry in csv til there is no next entry
-            while (weatherEntry != null) {
+            while (csvEntry!= null) {
 
-                // split current weather entry on comma
-               String[] weather = weatherEntry.split(",");
+                // split current entry on comma
+               String[] entryArray = csvEntry.split(",");
 
-               // convert entries in weather array to integer and create new weather data object
-               WeatherData weatherData = new WeatherData(weather[0], Integer.parseInt(weather[1]), Integer.parseInt(weather[2]));
+               // convert entries in array to integer and create new data point object
+               DataPoint dataPoint = new DataPoint(entryArray[0], Integer.parseInt(entryArray[indexMax]), Integer.parseInt(entryArray[indexMin]));
 
-               weatherDataPoints.add(weatherData);
+               dataPointList.add(dataPoint);
 
                // read next line of csv
-               weatherEntry = bufferedReader.readLine();
+               csvEntry = bufferedReader.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return weatherDataPoints;
+        return dataPointList;
     }
 }
