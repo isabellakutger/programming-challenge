@@ -1,4 +1,7 @@
-package de.exxcellent.challenge;
+package de.exxcellent.challenge.reader.impl;
+
+import de.exxcellent.challenge.datapoint.DataPoint;
+import de.exxcellent.challenge.reader.Reader;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,6 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of Reader for CSV files
+ */
 public class CSVReader implements Reader {
 
     @Override
